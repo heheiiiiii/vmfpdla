@@ -39,17 +39,19 @@
       z-index: -1;
     }
 
-    .photobooth-window {
-      width: min(1100px, 96vw);
-      max-height: 92vh;
-      background: var(--window-bg);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(18px);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+    .photo-booth-window {
+  width: 78%;                   /* 90% → 78% */
+  max-width: 900px;             /* 1100 → 900 */
+  height: auto;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(26px);
+  border-radius: 26px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+  padding: 20px 32px 28px;
+  margin: 40px auto 0;
+  transition: width .25s ease, max-width .25s ease;
+}
+
 
     /* ===== 상단 바 ===== */
     .top-bar {
@@ -98,11 +100,12 @@
     }
 
     .preview-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;   /* 8 → 12로 증가 */
+}
+
 
     .preview-inner {
       position: relative;
@@ -174,13 +177,14 @@
     }
 
     .frame-tray-wrapper {
-      width: 100%;
-      max-width: 720px;
-      margin-top: 4px;
-      overflow: hidden;
-      transition: max-height .25s ease;
-      max-height: 170px; /* 기본: 열림 */
-    }
+  width: 100%;
+  max-width: 540px;
+  margin-top: 8px;
+  overflow: hidden;
+  transition: max-height .25s ease;
+  max-height: 160px; /* 살짝 더 작게 */
+}
+
     .frame-tray-wrapper.closed { max-height: 0; }
 
     .frame-tray {
@@ -335,25 +339,30 @@
     }
 
     .capture-btn {
-      border: none;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      cursor: pointer;
-      background: radial-gradient(circle at 30% 20%, #ffe2f4, #ff8ac2);
-      color: #fff;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.28);
-      transition: transform .1s, box-shadow .1s, filter .1s;
-    }
-    .capture-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      filter: brightness(0.96);
-    }
+  border: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;  /* 클릭 가능 느낌 제거 */
+  background: radial-gradient(circle at 30% 20%, #ffd7f0, #ff98c7 70%);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+  transition: transform .1s, box-shadow .1s;
+}
+
+/* 클릭해도 아무 변화 없음 */
+.capture-btn:active {
+  transform: none;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+}
+
+/* 버튼 내부 이모티콘 제거 → 공백 유지 */
+.capture-btn::before {
+  content: "";
+}
+
 
     .bottom-section-left,
     .bottom-section-right {
@@ -598,36 +607,9 @@
 
     // === 사진 찍기 + 자동 저장 ===
     captureBtn.addEventListener("click", () => {
-      if (!stream || video.readyState < 2) {
-        alert("카메라가 아직 준비되지 않았어요. 조금만 기다렸다가 다시 시도해 주세요.");
-        return;
-      }
+  // 이제 아무 동작하지 않음 (장식용)
+});
 
-      const canvas = document.createElement("canvas");
-      const w = video.videoWidth || 1280;
-      const h = video.videoHeight || 720;
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext("2d");
-
-      // 영상 캡처
-      ctx.drawImage(video, 0, 0, w, h);
-
-      const dataUrl = canvas.toDataURL("image/png");
-
-      // 화면 정지용 이미지로 표시
-      photo.src = dataUrl;
-      photo.style.display = "block";
-      video.style.display = "none";
-
-      // 다운로드 자동 실행
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "photo.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
 
     // === 공유하기: 링크 공유 (간단) ===
     shareBtn.addEventListener("click", async () => {
