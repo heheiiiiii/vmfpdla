@@ -39,23 +39,22 @@
       z-index: -1;
     }
 
-   /* 기존 .photobooth-window / .photo-booth-window 관련 부분 전부 지우고 이걸로 교체 */
-.photobooth-window {
-  width: 78%;
-  max-width: 900px;
-  height: auto;
-  background: rgba(255, 255, 255, 0.55);           /* 반투명 밀키 화이트 */
+  .photobooth-window {
+  width: 68%;                        /* 기존 78% → 훨씬 작아짐 */
+  max-width: 760px;                  /* 기존 900px → 감성 사이즈 */
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(26px) saturate(150%);
   -webkit-backdrop-filter: blur(26px) saturate(150%);
   border-radius: 26px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.18);
-  padding: 20px 32px 28px;
+  padding: 16px 26px 22px;           /* 내부 패딩도 축소 */
   margin: 40px auto 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   transition: width .25s ease, max-width .25s ease;
 }
+
 
 
 
@@ -114,20 +113,19 @@
 }
 
 
-    .preview-inner {
-      position: relative;
-      width: 100%;
-      max-width: 720px;
-      aspect-ratio: 4 / 3;
-      background: radial-gradient(circle at top left,#fef6ff,#f1f7ff 40%,#ddebf7 80%);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-inline: auto;
-    }
+   .preview-inner {
+  position: relative;
+  width: 100%;
+  max-width: 460px;                  /* 기존 540px → 축소 */
+  aspect-ratio: 4 / 3;
+  background: radial-gradient(circle at top left,#fef6ff,#f1f7ff 40%,#ddebf7 80%);
+  border-radius: 18px;               /* 라운드도 더 귀엽게 */
+  overflow: hidden;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+  margin: 0 auto;
+  transition: max-width .25s ease;
+}
+
 
     video, #photo {
       position: absolute;
@@ -185,12 +183,12 @@
 
     .frame-tray-wrapper {
   width: 100%;
-  max-width: 540px;
-  margin-top: 8px;
-  overflow: hidden;
+  max-width: 460px;                  /* 카메라와 동일한 너비 */
+  margin-top: 6px;
   transition: max-height .25s ease;
-  max-height: 160px; /* 살짝 더 작게 */
+  max-height: 130px;                 /* 전체 높이도 축소 */
 }
+
 
     .frame-tray-wrapper.closed { max-height: 0; }
 
@@ -347,7 +345,7 @@
 
     .capture-btn {
   border: none;
-  width: 64px;
+  width: 52px;
   height: 64px;
   border-radius: 50%;
   display: inline-flex;
