@@ -39,18 +39,20 @@
       z-index: -1;
     }
 
-    .photo-booth-window {
-  width: 78%;                   /* 90% → 78% */
-  max-width: 900px;             /* 1100 → 900 */
+   .photo-booth-window {
+  width: 78%;
+  max-width: 900px;
   height: auto;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(26px);
+  background: rgba(255, 255, 255, 0.55);   /* 이전 감성 배경 */
+  backdrop-filter: blur(26px) saturate(150%); 
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
   border-radius: 26px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.18);
   padding: 20px 32px 28px;
   margin: 40px auto 0;
   transition: width .25s ease, max-width .25s ease;
 }
+
 
 
     /* ===== 상단 바 ===== */
@@ -379,19 +381,6 @@
       .bottom-bar { padding-inline: 14px; }
     }
     
-    .photo-booth-window {
-  width: 78%;
-  max-width: 900px;
-  height: auto;
-  background: rgba(255, 255, 255, 0.55);   /* 이전 감성 배경 */
-  backdrop-filter: blur(26px) saturate(150%); 
-  -webkit-backdrop-filter: blur(26px) saturate(150%);
-  border-radius: 26px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.18);
-  padding: 20px 32px 28px;
-  margin: 40px auto 0;
-  transition: width .25s ease, max-width .25s ease;
-}
 
   </style>
 </head>
