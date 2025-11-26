@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
-      /* 🔧 여기 URL만 바꾸면 전체 배경 이미지 바뀜 */
+      /* 🔧 여기만 바꾸면 전체 배경 이미지 변경 */
       --bg-image: url("https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1200");
       --window-bg: rgba(255, 255, 255, 0.9);
       --accent-pink: #ff8ac2;
@@ -16,15 +16,10 @@
       --radius-xl: 24px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: #111;
       min-height: 100vh;
       display: flex;
@@ -56,18 +51,14 @@
       overflow: hidden;
     }
 
-    /* === 상단 바 === */
+    /* ===== 상단 바 ===== */
     .top-bar {
       height: 44px;
       display: flex;
       align-items: center;
       padding: 0 16px;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.95),
-        rgba(240, 240, 240, 0.95)
-      );
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(240,240,240,0.95));
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .window-controls {
@@ -78,464 +69,320 @@
     }
 
     .window-star {
-      width: 16px;
-      height: 16px;
+      width: 16px; height: 16px;
       border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 11px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-      cursor: default;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.25);
       user-select: none;
     }
-
-    .star-red {
-      background: #ff5f57;
-      color: #ffe5e3;
-    }
-
-    .star-yellow {
-      background: #febc2e;
-      color: #fff3d6;
-    }
-
-    .star-green {
-      background: #28c840;
-      color: #e1ffee;
-    }
+    .star-red { background:#ff5f57; color:#ffe5e3; }
+    .star-yellow { background:#febc2e; color:#fff3d6; }
+    .star-green { background:#28c840; color:#e1ffee; }
 
     .title {
       flex: 1;
       text-align: center;
       font-size: 14px;
       font-weight: 500;
-      color: #555;
+      color:#555;
       letter-spacing: 0.03em;
     }
 
     .filter-toggle {
-      border: none;
-      background: white;
-      border-radius: 999px;
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: transform 0.15s ease, box-shadow 0.15s ease,
-        background-color 0.15s ease;
+      border:none;
+      background:white;
+      border-radius:999px;
+      width:32px;height:32px;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:18px;
+      cursor:pointer;
+      box-shadow:0 4px 10px rgba(0,0,0,0.15);
+      transition:transform .15s, box-shadow .15s, background-color .15s;
     }
-
     .filter-toggle:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      background-color: #fff9fe;
+      transform:translateY(-1px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.2);
+      background-color:#fff9fe;
     }
+    .filter-toggle.active { background:var(--accent-pink); color:#fff; }
 
-    .filter-toggle.active {
-      background: var(--accent-pink);
-      color: #fff;
-    }
-
-    /* === 중앙 영역 === */
+    /* ===== 중앙 영역 ===== */
     .content-row {
-      flex: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
-      gap: 0;
-      padding: 16px 16px 10px;
+      flex:1;
+      display:grid;
+      grid-template-columns: minmax(0,1fr);
+      padding:16px 16px 10px;
     }
 
     .preview-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding-right: 10px;
-      border-right: 1px solid rgba(0, 0, 0, 0.04);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
     }
 
     .preview-inner {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: radial-gradient(
-        circle at top left,
-        #fef6ff,
-        #f1f7ff 40%,
-        #ddebf7 80%
-      );
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position:relative;
+      width:100%;
+      max-width:720px;
+      aspect-ratio:4 / 3;
+      background: radial-gradient(circle at top left,#fef6ff,#f1f7ff 40%,#ddebf7 80%);
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 14px 40px rgba(0,0,0,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-inline:auto;
     }
 
-    video,
-    #photo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    video, #photo {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    #photo { display:none; }
+
+    /* 필터 효과 */
+    .preview-inner.filter-none   { filter:none; }
+    .preview-inner.filter-soft   { filter:brightness(1.08) contrast(0.95) saturate(1.05); }
+    .preview-inner.filter-pink   { filter:brightness(1.05) saturate(1.18) hue-rotate(-10deg); }
+    .preview-inner.filter-film   { filter:contrast(1.15) saturate(0.95); }
+    .preview-inner.filter-vintage{ filter:sepia(.3) contrast(1.05) saturate(.9); }
+    .preview-inner.filter-mono   { filter:grayscale(1) contrast(1.1); }
+
+    /* 프레임 오버레이: PNG 꽉 차게 */
+    #frameOverlay {
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:3;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:110% 110%; /* 살짝 확대해서 이미지 바깥 여백 제거 */
     }
 
-    #photo {
-      display: none; /* 캡처 또는 업로드 전까지 숨김 */
-    }
+    /* 🔧 여기서 각 프레임 PNG 연결 (images 폴더 기준) */
+    .frame-1 { background-image:url("images/frame-1.png"); }
+    .frame-2 { background-image:url("images/frame-2.png"); }
+    .frame-3 { background-image:url("images/frame-3.png"); }
+    .frame-4 { background-image:url("images/frame-4.png"); }
+    .frame-5 { background-image:url("images/frame-5.png"); }
+    .frame-6 { background-image:url("images/frame-6.png"); }
 
-    .preview-inner.filter-soft {
-      filter: brightness(1.08) contrast(0.95) saturate(1.05);
-    }
-
-    .preview-inner.filter-pink {
-      filter: brightness(1.05) saturate(1.18) hue-rotate(-10deg);
-    }
-
-    .preview-inner.filter-film {
-      filter: contrast(1.15) saturate(0.95);
-    }
-
-    .preview-inner.filter-vintage {
-      filter: sepia(0.3) contrast(1.05) saturate(0.9);
-    }
-
-    .preview-inner.filter-mono {
-      filter: grayscale(1) contrast(1.1);
-    }
-
-    .preview-inner.filter-none {
-      filter: none;
-    }
-
-    /* 프레임 오버레이 */
-    #frame-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    /* 🔧 실제로는 여기 배경 이미지를 키치 프레임 PNG로 교체하면 됨 */
-    .frame-1 {
-      border: 18px solid #ffc7de;
-      box-shadow: inset 0 0 0 4px #fff7fb;
-    }
-
-    .frame-2 {
-      border: 16px solid #baf4ff;
-      box-shadow: inset 0 0 0 3px #f7feff;
-    }
-
-    .frame-3 {
-      border: 10px solid #fff;
-      box-shadow: inset 0 0 0 3px #111, inset 0 0 0 10px #fff;
-    }
-
-    .frame-4 {
-      border-radius: 32px;
-      border: 12px solid #ffe1a3;
-      box-shadow: inset 0 0 0 4px #fff8e8;
-    }
-
-    .frame-5 {
-      border: 16px dashed #ff9f9f;
-      box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.9);
-    }
-
-    .frame-6 {
-      border: 20px solid;
-      border-image: linear-gradient(
-          120deg,
-          #ffb6ff,
-          #b7f0ff,
-          #ffe9a3,
-          #c6ffdd
-        )
-        1;
-    }
-
-    /* 프레임 토글 버튼 */
+    /* ===== 프레임/필터 트레이 ===== */
     .frame-toggle {
-      margin-top: 8px;
-      border: none;
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      transition: transform 0.15s ease, box-shadow 0.15s ease,
-        background-color 0.15s ease;
+      margin-top:8px;
+      border:none;
+      width:34px;height:34px;
+      border-radius:999px;
+      background:#ffffff;
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;
+      cursor:pointer;
+      box-shadow:0 6px 16px rgba(0,0,0,0.2);
+      transition:transform .15s, box-shadow .15s, background-color .15s;
     }
-
     .frame-toggle:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
-      background-color: #fff7fd;
+      transform:translateY(-1px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.22);
+      background-color:#fff7fd;
     }
 
-    /* 프레임 트레이 */
     .frame-tray-wrapper {
-      width: 100%;
-      overflow: hidden;
-      transition: max-height 0.25s ease;
-      max-height: 130px; /* open 기본값 */
+      width:100%;
+      max-width:720px;
+      margin-top:6px;
+      overflow:hidden;
+      transition:max-height .25s ease;
+      max-height:170px;          /* 기본: 열림 */
     }
-
-    .frame-tray-wrapper.closed {
-      max-height: 0;
-    }
+    .frame-tray-wrapper.closed { max-height:0; }
 
     .frame-tray {
-      margin-top: 8px;
-      padding: 8px 12px 6px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.14);
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
+      background:rgba(255,255,255,0.96);
+      border-radius:18px;
+      box-shadow:0 10px 26px rgba(0,0,0,0.14);
+      padding:8px 10px 10px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
 
+    .tray-tabs {
+      display:flex;
+      gap:4px;
+      padding-inline:4px;
+    }
+    .tray-tab {
+      flex:1;
+      border-radius:999px;
+      border:none;
+      padding:6px 0;
+      font-size:12px;
+      cursor:pointer;
+      background:transparent;
+      color:#777;
+      transition:background-color .15s, color .15s;
+    }
+    .tray-tab.active {
+      background:linear-gradient(135deg,#ff8ac2,#ffbfe0);
+      color:#fff;
+    }
+
+    .tray-content {
+      margin-top:4px;
+    }
+
+    .tray-panel { display:none; }
+    .tray-panel.active { display:flex; }
+
+    /* 프레임 썸네일 */
+    .frame-panel {
+      gap:8px;
+      overflow-x:auto;
+    }
     .frame-thumb {
-      flex: 0 0 80px;
-      height: 70px;
-      border-radius: 14px;
-      background: #f3f3f3;
-      border: 2px solid transparent;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      text-align: center;
-      padding: 4px;
-      color: #555;
-      transition: transform 0.12s ease, box-shadow 0.12s ease,
-        border-color 0.12s ease, background-color 0.12s ease;
+      flex:0 0 80px;
+      height:70px;
+      border-radius:14px;
+      background:#f3f3f3;
+      border:2px solid transparent;
+      position:relative;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      text-align:center;
+      padding:4px;
+      color:#555;
+      transition:transform .12s, box-shadow .12s, border-color .12s, background-color .12s;
     }
-
     .frame-thumb::before {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      border-radius: 10px;
-      border: 2px solid rgba(255, 255, 255, 0.9);
-      pointer-events: none;
+      content:"";
+      position:absolute;
+      inset:8px;
+      border-radius:10px;
+      border:2px solid rgba(255,255,255,0.9);
+      pointer-events:none;
     }
-
     .frame-thumb[data-frame="frame-1"] {
-      background: linear-gradient(135deg, #ffb6d9, #ffe0f0);
+      background:linear-gradient(135deg,#ffb6d9,#ffe0f0);
     }
-
     .frame-thumb[data-frame="frame-2"] {
-      background: linear-gradient(135deg, #b6ecff, #e5fbff);
+      background:linear-gradient(135deg,#b6ecff,#e5fbff);
     }
-
     .frame-thumb[data-frame="frame-3"] {
-      background: linear-gradient(135deg, #ffffff, #f3f3f3);
+      background:linear-gradient(135deg,#ffffff,#f3f3f3);
     }
-
     .frame-thumb[data-frame="frame-4"] {
-      background: linear-gradient(135deg, #ffe6b8, #fff4d0);
+      background:linear-gradient(135deg,#ffe6b8,#fff4d0);
     }
-
     .frame-thumb[data-frame="frame-5"] {
-      background: linear-gradient(135deg, #ffd5d5, #fff1f1);
+      background:linear-gradient(135deg,#ffd5d5,#fff1f1);
     }
-
     .frame-thumb[data-frame="frame-6"] {
-      background: linear-gradient(135deg, #ffb6ff, #b7f0ff);
+      background:linear-gradient(135deg,#ffb6ff,#b7f0ff);
     }
-
     .frame-thumb.active {
-      border-color: var(--accent-pink);
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-      transform: translateY(-2px);
+      border-color:var(--accent-pink);
+      box-shadow:0 6px 14px rgba(0,0,0,0.18);
+      transform:translateY(-2px);
     }
 
-    /* === 필터 패널 === */
+    /* 필터 썸네일 (트레이 안) */
     .filter-panel {
-      position: relative;
-      padding-left: 16px;
-      display: flex;
-      flex-direction: column;
-      max-width: 280px;
-      transform: translateX(100%);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 0.25s ease, opacity 0.25s ease;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:flex-start;
     }
-
-    .filter-panel.open {
-      transform: translateX(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .filter-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .filter-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #777;
-    }
-
-    .filter-close {
-      border: none;
-      background: transparent;
-      font-size: 18px;
-      cursor: pointer;
-      line-height: 1;
-      color: #999;
-    }
-
-    .filter-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
     .filter-item {
-      border-radius: 16px;
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      padding: 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease,
-        border-color 0.12s ease, background-color 0.12s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      flex:0 0 calc(33.333% - 6px);
+      border-radius:14px;
+      background:#ffffff;
+      border:1px solid rgba(0,0,0,0.05);
+      padding:6px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      transition:transform .12s, box-shadow .12s, border-color .12s, background-color .12s;
     }
-
     .filter-thumb {
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #ffe6f3, #e6f1ff);
+      height:40px;
+      border-radius:10px;
+      background:linear-gradient(135deg,#ffe6f3,#e6f1ff);
     }
-
     .filter-name {
-      font-size: 11px;
-      text-align: center;
-      color: #555;
+      font-size:11px;
+      text-align:center;
+      color:#555;
     }
-
     .filter-item.active {
-      border-color: var(--accent-mint);
-      background-color: #f6fffb;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-      transform: translateY(-2px);
+      border-color:var(--accent-mint);
+      background-color:#f6fffb;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      transform:translateY(-2px);
     }
 
-    /* === 하단 바 === */
+    /* ===== 하단 바 ===== */
     .bottom-bar {
-      padding: 10px 24px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
+      padding:10px 24px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
     }
 
     .round-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 10px 18px;
-      min-width: 120px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-      background: #ffffff;
-      transition: transform 0.12s ease, box-shadow 0.12s ease,
-        background-color 0.12s ease;
+      border:none;
+      border-radius:999px;
+      padding:10px 18px;
+      min-width:120px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      font-size:14px;
+      cursor:pointer;
+      box-shadow:0 10px 24px rgba(0,0,0,0.18);
+      background:#ffffff;
+      transition:transform .12s, box-shadow .12s, background-color .12s;
     }
-
-    .round-btn span.icon {
-      font-size: 16px;
-    }
+    .round-btn span.icon { font-size:16px; }
 
     .round-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
-      background-color: #fff7fd;
+      transform:translateY(-2px);
+      box-shadow:0 14px 30px rgba(0,0,0,0.22);
+      background-color:#fff7fd;
     }
 
     .round-btn.primary {
-      background: linear-gradient(135deg, #ff8ac2, #ffb3d8);
-      color: #fff;
+      background:linear-gradient(135deg,#ff8ac2,#ffb3d8);
+      color:#fff;
     }
-
     .round-btn.primary:hover {
-      background: linear-gradient(135deg, #ff7fbf, #ff9fd0);
+      background:linear-gradient(135deg,#ff7fbf,#ff9fd0);
     }
 
-    .bottom-bar-left,
-    .bottom-bar-right {
-      flex: 1;
-      display: flex;
-      justify-content: center;
+    .bottom-bar-left,.bottom-bar-right {
+      flex:1;
+      display:flex;
+      justify-content:center;
     }
+    .bottom-bar-left { justify-content:flex-start; }
+    .bottom-bar-right{ justify-content:flex-end; }
 
-    .bottom-bar-left {
-      justify-content: flex-start;
-    }
-
-    .bottom-bar-right {
-      justify-content: flex-end;
-    }
-
-    /* 반응형 (태블릿/모바일 간단 처리) */
     @media (max-width: 900px) {
-      .content-row {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .filter-panel {
-        position: absolute;
-        right: 0;
-        top: 44px;
-        bottom: 80px;
-        max-width: 260px;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.96);
-        border-left: 1px solid rgba(0, 0, 0, 0.05);
-      }
-      .preview-area {
-        padding-right: 0;
-        border-right: none;
-      }
-      .bottom-bar {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .round-btn {
-        min-width: 110px;
-        padding-inline: 14px;
-      }
+      .preview-inner { max-width:100%; }
+      .frame-tray-wrapper { max-width:100%; }
+      .bottom-bar { flex-wrap:wrap; justify-content:center; }
+      .round-btn { min-width:110px; padding-inline:14px; }
     }
   </style>
 </head>
@@ -551,14 +398,13 @@
         <div class="window-star star-green">★</div>
       </div>
       <div class="title">Photo Booth</div>
-      <button class="filter-toggle" id="filterToggle" aria-label="필터 패널 토글">
+      <button class="filter-toggle" id="filterToggle" aria-label="필터 탭 열기">
         🎨
       </button>
     </header>
 
     <!-- 중앙 영역 -->
     <main class="content-row">
-      <!-- 카메라 + 프레임 -->
       <section class="preview-area">
         <div class="preview-inner filter-none" id="previewInner">
           <video id="cameraVideo" autoplay playsinline></video>
@@ -566,74 +412,61 @@
           <div id="frameOverlay" class="frame-1"></div>
         </div>
 
-        <button
-          id="frameToggle"
-          class="frame-toggle"
-          aria-label="프레임 트레이 토글"
-          aria-expanded="true"
-        >
+        <!-- 트레이 토글 버튼 (∧ / ∨) -->
+        <button id="frameToggle" class="frame-toggle" aria-expanded="true">
           ∧
         </button>
 
+        <!-- 프레임/필터 트레이 -->
         <div id="frameTrayWrapper" class="frame-tray-wrapper">
-          <div class="frame-tray" id="frameTray">
-            <div class="frame-thumb active" data-frame="frame-1">
-              딸기 키치
+          <div class="frame-tray">
+            <div class="tray-tabs">
+              <button class="tray-tab active" id="tabFrames">프레임</button>
+              <button class="tray-tab" id="tabFilters">필터</button>
             </div>
-            <div class="frame-thumb" data-frame="frame-2">
-              민트 키치
-            </div>
-            <div class="frame-thumb" data-frame="frame-3">
-              4컷 포토부스
-            </div>
-            <div class="frame-thumb" data-frame="frame-4">
-              폴라로이드
-            </div>
-            <div class="frame-thumb" data-frame="frame-5">
-              도트/버튼 키치
-            </div>
-            <div class="frame-thumb" data-frame="frame-6">
-              레인보우 체크
+
+            <div class="tray-content">
+              <!-- 프레임 패널 -->
+              <div class="tray-panel frame-panel active" id="framePanel">
+                <div class="frame-thumb active" data-frame="frame-1">프레임 1</div>
+                <div class="frame-thumb" data-frame="frame-2">프레임 2</div>
+                <div class="frame-thumb" data-frame="frame-3">프레임 3</div>
+                <div class="frame-thumb" data-frame="frame-4">프레임 4</div>
+                <div class="frame-thumb" data-frame="frame-5">프레임 5</div>
+                <div class="frame-thumb" data-frame="frame-6">프레임 6</div>
+              </div>
+
+              <!-- 필터 패널 -->
+              <div class="tray-panel filter-panel" id="filterPanel">
+                <div class="filter-item active" data-filter="filter-none">
+                  <div class="filter-thumb"></div>
+                  <div class="filter-name">None</div>
+                </div>
+                <div class="filter-item" data-filter="filter-soft">
+                  <div class="filter-thumb"></div>
+                  <div class="filter-name">Soft Cream</div>
+                </div>
+                <div class="filter-item" data-filter="filter-pink">
+                  <div class="filter-thumb"></div>
+                  <div class="filter-name">Pink Mood</div>
+                </div>
+                <div class="filter-item" data-filter="filter-film">
+                  <div class="filter-thumb"></div>
+                  <div class="filter-name">Film Dust</div>
+                </div>
+                <div class="filter-item" data-filter="filter-vintage">
+                  <div class="filter-thumb"></div>
+                  <div class="filter-name">Vintage</div>
+                </div>
+                <div class="filter-item" data-filter="filter-mono">
+                  <div class="filter-thumb"></div>
+                  <div class="filter-name">Mono</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-      <!-- 필터 패널 -->
-      <aside class="filter-panel" id="filterPanel">
-        <div class="filter-header">
-          <div class="filter-title">Filters</div>
-          <button class="filter-close" id="filterClose" aria-label="필터 닫기">
-            ×
-          </button>
-        </div>
-        <div class="filter-list" id="filterList">
-          <div class="filter-item active" data-filter="filter-none">
-            <div class="filter-thumb"></div>
-            <div class="filter-name">None</div>
-          </div>
-          <div class="filter-item" data-filter="filter-soft">
-            <div class="filter-thumb"></div>
-            <div class="filter-name">Soft Cream</div>
-          </div>
-          <div class="filter-item" data-filter="filter-pink">
-            <div class="filter-thumb"></div>
-            <div class="filter-name">Pink Mood</div>
-          </div>
-          <div class="filter-item" data-filter="filter-film">
-            <div class="filter-thumb"></div>
-            <div class="filter-name">Film Dust</div>
-          </div>
-          <div class="filter-item" data-filter="filter-vintage">
-            <div class="filter-thumb"></div>
-            <div class="filter-name">Vintage</div>
-          </div>
-          <div class="filter-item" data-filter="filter-mono">
-            <div class="filter-thumb"></div>
-            <div class="filter-name">Mono</div>
-          </div>
-        </div>
-      </aside>
     </main>
 
     <!-- 하단 바 -->
@@ -664,16 +497,18 @@
     const video = document.getElementById("cameraVideo");
     const photo = document.getElementById("photo");
     const previewInner = document.getElementById("previewInner");
-
     const frameOverlay = document.getElementById("frameOverlay");
+
     const frameToggleBtn = document.getElementById("frameToggle");
     const frameTrayWrapper = document.getElementById("frameTrayWrapper");
     const frameThumbs = document.querySelectorAll(".frame-thumb");
 
-    const filterToggle = document.getElementById("filterToggle");
+    const tabFrames = document.getElementById("tabFrames");
+    const tabFilters = document.getElementById("tabFilters");
+    const framePanel = document.getElementById("framePanel");
     const filterPanel = document.getElementById("filterPanel");
-    const filterClose = document.getElementById("filterClose");
     const filterItems = document.querySelectorAll(".filter-item");
+    const filterToggle = document.getElementById("filterToggle");
 
     const uploadBtn = document.getElementById("uploadBtn");
     const captureBtn = document.getElementById("captureBtn");
@@ -681,33 +516,30 @@
     const fileInput = document.getElementById("fileInput");
 
     let stream = null;
-    let currentFilterClass = "filter-none";
-    let isFrameTrayOpen = true;
+    let isTrayOpen = true;
 
     // === 카메라 시작 ===
     async function initCamera() {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: "user" },
-          audio: false,
+          audio: false
         });
         video.srcObject = stream;
       } catch (err) {
         console.warn("카메라 접근 실패:", err);
-        // 카메라가 안 되면 안내 문구만 표시
         video.insertAdjacentHTML(
           "afterend",
-          '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;padding:16px;text-align:center;background:rgba(255,255,255,0.8);">카메라에 접근할 수 없습니다.<br/>상단의 [사진 불러오기] 버튼으로 이미지를 불러와보세요.</div>'
+          '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;padding:16px;text-align:center;background:rgba(255,255,255,0.8);">카메라에 접근할 수 없습니다.<br/>아래 [사진 불러오기] 버튼으로 이미지를 선택해 보세요.</div>'
         );
       }
     }
-
     initCamera();
 
-    // === 프레임 트레이 토글 (∧ / ∨) ===
+    // === 트레이 열고 닫기 (∧ / ∨) ===
     frameToggleBtn.addEventListener("click", () => {
-      isFrameTrayOpen = !isFrameTrayOpen;
-      if (isFrameTrayOpen) {
+      isTrayOpen = !isTrayOpen;
+      if (isTrayOpen) {
         frameTrayWrapper.classList.remove("closed");
         frameToggleBtn.textContent = "∧";
         frameToggleBtn.setAttribute("aria-expanded", "true");
@@ -718,6 +550,37 @@
       }
     });
 
+    // 상단 🎨 버튼 → 트레이 열고 필터 탭으로
+    filterToggle.addEventListener("click", () => {
+      if (!isTrayOpen) {
+        frameTrayWrapper.classList.remove("closed");
+        frameToggleBtn.textContent = "∧";
+        frameToggleBtn.setAttribute("aria-expanded", "true");
+        isTrayOpen = true;
+      }
+      setActiveTab("filters");
+      filterToggle.classList.add("active");
+      setTimeout(() => filterToggle.classList.remove("active"), 300);
+    });
+
+    // === 탭 전환 ===
+    function setActiveTab(tab) {
+      if (tab === "frames") {
+        tabFrames.classList.add("active");
+        tabFilters.classList.remove("active");
+        framePanel.classList.add("active");
+        filterPanel.classList.remove("active");
+      } else {
+        tabFrames.classList.remove("active");
+        tabFilters.classList.add("active");
+        framePanel.classList.remove("active");
+        filterPanel.classList.add("active");
+      }
+    }
+
+    tabFrames.addEventListener("click", () => setActiveTab("frames"));
+    tabFilters.addEventListener("click", () => setActiveTab("filters"));
+
     // === 프레임 선택 ===
     frameThumbs.forEach((thumb) => {
       thumb.addEventListener("click", () => {
@@ -725,32 +588,11 @@
         thumb.classList.add("active");
 
         const frameName = thumb.dataset.frame;
-        frameOverlay.className = ""; // reset
+        frameOverlay.className = "";
         frameOverlay.id = "frameOverlay";
         frameOverlay.classList.add(frameName);
       });
     });
-
-    // === 필터 패널 토글 ===
-    function openFilterPanel() {
-      filterPanel.classList.add("open");
-      filterToggle.classList.add("active");
-    }
-
-    function closeFilterPanel() {
-      filterPanel.classList.remove("open");
-      filterToggle.classList.remove("active");
-    }
-
-    filterToggle.addEventListener("click", () => {
-      if (filterPanel.classList.contains("open")) {
-        closeFilterPanel();
-      } else {
-        openFilterPanel();
-      }
-    });
-
-    filterClose.addEventListener("click", closeFilterPanel);
 
     // === 필터 선택 ===
     filterItems.forEach((item) => {
@@ -758,7 +600,6 @@
         filterItems.forEach((f) => f.classList.remove("active"));
         item.classList.add("active");
 
-        // 기존 필터 클래스 제거
         previewInner.classList.remove(
           "filter-none",
           "filter-soft",
@@ -767,17 +608,13 @@
           "filter-vintage",
           "filter-mono"
         );
-
         const filterClass = item.dataset.filter;
-        currentFilterClass = filterClass;
         previewInner.classList.add(filterClass);
       });
     });
 
     // === 사진 불러오기 ===
-    uploadBtn.addEventListener("click", () => {
-      fileInput.click();
-    });
+    uploadBtn.addEventListener("click", () => fileInput.click());
 
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
@@ -791,41 +628,39 @@
       reader.readAsDataURL(file);
     });
 
-    // === 사진 찍기 (캡처) ===
+    // === 사진 찍기 ===
     captureBtn.addEventListener("click", () => {
       if (!stream || video.readyState < 2) {
         alert("카메라가 아직 준비되지 않았어요. 조금만 기다렸다가 다시 시도해 주세요.");
         return;
       }
       const canvas = document.createElement("canvas");
-      const videoWidth = video.videoWidth || 1280;
-      const videoHeight = video.videoHeight || 720;
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
+      const w = video.videoWidth || 1280;
+      const h = video.videoHeight || 720;
+      canvas.width = w;
+      canvas.height = h;
       const ctx = canvas.getContext("2d");
-      ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
+      ctx.drawImage(video, 0, 0, w, h);
       const dataUrl = canvas.toDataURL("image/png");
       photo.src = dataUrl;
       photo.style.display = "block";
       video.style.display = "none";
     });
 
-    // === 공유하기 (간단 버전) ===
+    // === 공유하기 (간단 링크 공유) ===
     shareBtn.addEventListener("click", async () => {
       if (navigator.share) {
         try {
           await navigator.share({
             title: "Photo Booth",
             text: "키치 프레임 포토부스에서 만든 사진이에요 ✨",
-            url: window.location.href,
+            url: window.location.href
           });
         } catch (err) {
-          console.warn("공유 취소 또는 실패:", err);
+          console.warn("공유 취소/실패:", err);
         }
       } else {
-        alert(
-          "이 브라우저에서는 Web Share API를 지원하지 않아요.\n주소창의 링크를 복사해서 친구에게 공유해 주세요!"
-        );
+        alert("이 브라우저에서는 Web Share API를 지원하지 않아요.\n주소창 링크를 복사해서 친구에게 보내 주세요!");
       }
     });
   </script>
